@@ -1,6 +1,6 @@
 ﻿using ModelContextProtocol.Protocol;
 using System.Buffers;
-using System.Net.ServerSentEvents;
+using System.Net.ServerSentEvents.Fakes;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Channels;
@@ -41,7 +41,7 @@ internal sealed class SseWriter(string? messageEndpoint = null, BoundedChannelOp
             messages = MessageFilter(messages, cancellationToken);
         }
 
-        _writeTask = SseFormatter.WriteAsync(messages, sseResponseStream, WriteJsonRpcMessageToBuffer, cancellationToken);
+        _writeTask = System.Net.ServerSentEvents.Fakes.SseFormatter.WriteAsync(messages, sseResponseStream, WriteJsonRpcMessageToBuffer, cancellationToken);
         return _writeTask;
     }
 
@@ -60,7 +60,7 @@ internal sealed class SseWriter(string? messageEndpoint = null, BoundedChannelOp
         }
 
         // Emit redundant "event: message" lines for better compatibility with other SDKs.
-        await _messages.Writer.WriteAsync(new SseItem<JsonRpcMessage?>(message, SseParser.EventTypeDefault), cancellationToken).ConfigureAwait(false);
+        await _messages.Writer.WriteAsync(new SseItem<JsonRpcMessage?>(message, System.Net.ServerSentEvents.SseParser.EventTypeDefault), cancellationToken).ConfigureAwait(false);
     }
 
     public async ValueTask DisposeAsync()

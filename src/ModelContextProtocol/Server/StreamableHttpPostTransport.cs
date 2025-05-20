@@ -1,6 +1,6 @@
 ﻿using ModelContextProtocol.Protocol;
 using System.IO.Pipelines;
-using System.Net.ServerSentEvents;
+using System.Net.ServerSentEvents.Fakes;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Channels;

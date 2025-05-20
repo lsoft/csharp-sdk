@@ -68,7 +68,7 @@ namespace ModelContextProtocol
     }
 }
 
-#if !NET9_0_OR_GREATER
+#if NET8_0
 namespace System.Text.Json.Serialization
 {
     /// <summary>
